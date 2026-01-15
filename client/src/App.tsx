@@ -7,8 +7,11 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import WorkoutDetail from "@/pages/WorkoutDetail";
 import Profile from "@/pages/Profile";
+import Planner from "@/pages/Planner";
+import Onboarding from "@/components/Onboarding";
 import { Link, useLocation } from "wouter";
 import { Dumbbell, User, Layout, BookOpen, BarChart } from "lucide-react";
+import { useState, useEffect } from "react";
 
 function Navigation() {
   const [location] = useLocation();
@@ -48,16 +51,32 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/workout/:id" component={WorkoutDetail} />
       <Route path="/profile" component={Profile} />
+      <Route path="/planner" component={Planner} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
 function App() {
+  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const onboarded = localStorage.getItem("onboarded");
+    setShowOnboarding(!onboarded);
+  }, []);
+
+  const completeOnboarding = () => {
+    localStorage.setItem("onboarded", "true");
+    setShowOnboarding(false);
+  };
+
+  if (showOnboarding === null) return null;
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-background">
+          {showOnboarding && <Onboarding onComplete={completeOnboarding} />}
           <Router />
           <Navigation />
         </div>
