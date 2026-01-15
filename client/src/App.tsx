@@ -8,6 +8,8 @@ import Home from "@/pages/Home";
 import WorkoutDetail from "@/pages/WorkoutDetail";
 import Profile from "@/pages/Profile";
 import Planner from "@/pages/Planner";
+import Library from "@/pages/Library";
+import Progress from "@/pages/Progress";
 import Onboarding from "@/components/Onboarding";
 import { Link, useLocation } from "wouter";
 import { Dumbbell, User, Layout, BookOpen, BarChart } from "lucide-react";
@@ -52,6 +54,8 @@ function Router() {
       <Route path="/workout/:id" component={WorkoutDetail} />
       <Route path="/profile" component={Profile} />
       <Route path="/planner" component={Planner} />
+      <Route path="/library" component={Library} />
+      <Route path="/progress" component={Progress} />
       <Route component={NotFound} />
     </Switch>
   );
