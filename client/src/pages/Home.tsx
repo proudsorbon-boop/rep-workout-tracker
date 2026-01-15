@@ -2,13 +2,28 @@ import { useWorkouts, useDeleteWorkout } from "@/hooks/use-workouts";
 import { CreateWorkoutDialog } from "@/components/CreateWorkoutDialog";
 import { Link } from "wouter";
 import { format } from "date-fns";
-import { Dumbbell, ChevronRight, CalendarDays, Trash2 } from "lucide-react";
+import { Dumbbell, ChevronRight, CalendarDays, Trash2, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+
+const quotes = [
+  "The only bad workout is the one that didn't happen.",
+  "Fitness is not about being better than someone else. It's about being better than you were yesterday.",
+  "Don't stop when you're tired. Stop when you're done.",
+  "Your body can stand almost anything. It’s your mind that you have to convince.",
+  "Action is the foundational key to all success.",
+  "Motivation is what gets you started. Habit is what keeps you going."
+];
 
 export default function Home() {
   const { data: workouts, isLoading, error } = useWorkouts();
   const deleteWorkout = useDeleteWorkout();
+  const [quote, setQuote] = useState("");
+
+  useEffect(() => {
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -30,7 +45,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-32">
       <header className="pt-12 pb-6 px-6 max-w-md mx-auto">
         <h1 className="text-4xl font-display font-extrabold tracking-tight text-foreground">
           Your <span className="text-primary">Workouts</span>
@@ -41,6 +56,18 @@ export default function Home() {
       </header>
 
       <main className="px-4 max-w-md mx-auto">
+        {/* Motivation Block */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 p-6 rounded-2xl bg-primary/10 border border-primary/20 relative overflow-hidden group"
+        >
+          <Quote className="absolute -top-2 -right-2 h-16 w-16 text-primary/5 -rotate-12 group-hover:rotate-0 transition-transform duration-500" />
+          <p className="italic text-primary font-medium text-lg leading-relaxed relative z-10">
+            "{quote}"
+          </p>
+        </motion.div>
+
         <div className="space-y-4">
           <AnimatePresence>
             {workouts?.map((workout, index) => (

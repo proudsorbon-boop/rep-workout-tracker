@@ -10,9 +10,10 @@ import Profile from "@/pages/Profile";
 import Planner from "@/pages/Planner";
 import Library from "@/pages/Library";
 import Progress from "@/pages/Progress";
+import Notifications from "@/pages/Notifications";
 import Onboarding from "@/components/Onboarding";
 import { Link, useLocation } from "wouter";
-import { Dumbbell, User, Layout, BookOpen, BarChart } from "lucide-react";
+import { Dumbbell, User, Layout, BookOpen, BarChart, Bell } from "lucide-react";
 import { useState, useEffect } from "react";
 
 function Navigation() {
@@ -20,9 +21,9 @@ function Navigation() {
 
   const navItems = [
     { href: "/", icon: Layout, label: "Workouts" },
-    { href: "/library", icon: BookOpen, label: "Library" },
     { href: "/planner", icon: Dumbbell, label: "Planner" },
     { href: "/progress", icon: BarChart, label: "Progress" },
+    { href: "/notifications", icon: Bell, label: "Remind" },
     { href: "/profile", icon: User, label: "Profile" },
   ];
 
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/planner" component={Planner} />
       <Route path="/library" component={Library} />
       <Route path="/progress" component={Progress} />
+      <Route path="/notifications" component={Notifications} />
       <Route component={NotFound} />
     </Switch>
   );
