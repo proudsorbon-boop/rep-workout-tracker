@@ -1,0 +1,83 @@
+You are a senior full-stack developer and UX designer.
+
+Project context:
+This is a minimalist fitness web app called "Fit Minimalist".
+Tech stack:
+- Frontend: HTML, CSS, JavaScript (vanilla or lightweight framework)
+- Mobile wrapper: Capacitor (Android)
+- Style: minimalist, clean, calm colors, mobile-first
+
+GOAL:
+Upgrade the app to a real MVP fitness application.
+
+REQUIREMENTS (implement ALL):
+
+1. User Profile
+- Create a profile screen
+- Fields: name, age, height, weight, fitness goal (lose weight / build muscle / stay fit)
+- Save data in localStorage
+- Auto-load profile on app start
+
+2. Goals & Progress Tracking
+- Allow user to set daily and weekly goals
+- Track completed workouts
+- Display progress using simple charts (no heavy libraries)
+- Show progress percentage
+
+3. Workout Planner
+- Weekly workout schedule
+- Levels: Beginner / Intermediate / Advanced
+- Each day has a predefined workout
+- Allow user to mark workout as completed
+
+4. Exercise Library
+- List of exercises with:
+  - name
+  - target muscles
+  - short description
+- Optional: placeholder for video or animation
+- Clean card-based layout
+
+5. Notifications (logic only)
+- Add reminder logic (store preferred time)
+- Prepare structure for mobile notifications (Capacitor ready)
+- Fallback: browser alert for now
+
+6. Gamification
+- Achievement system:
+  - First workout
+  - 7 days streak
+  - 30 workouts completed
+- Store achievements locally
+- Display badges visually
+
+7. Nutrition / Calories (basic)
+- Simple calorie calculator
+- Input: age, weight, height, activity level
+- Output: daily calorie recommendation
+- Optional: simple food log (text only)
+
+8. Social / Motivation
+- Daily motivational quote (random)
+- Share progress summary (text based)
+- Prepare UI for future social features
+
+9. UX / Onboarding
+- First-launch onboarding screens
+- Explain:
+  - how workouts work
+  - how progress is tracked
+- Option to skip onboarding
+
+RULES:
+- Keep UI minimalist
+- No backend, localStorage only
+- Mobile-first layout
+- Clean readable code
+- Comment the code
+- Reuse existing styles where possible
+
+OUTPUT:
+- Modify existing files
+- Create new files only if necessary
+- Explain briefly what was changed
