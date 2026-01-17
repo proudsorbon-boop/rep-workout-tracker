@@ -34,12 +34,12 @@ function Navigation() {
           const isActive = location === item.href;
           return (
             <Link key={item.href} href={item.href}>
-              <a className={`flex flex-col items-center gap-1 transition-colors ${
+              <button className={`flex flex-col items-center gap-1 transition-colors ${
                 isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}>
                 <item.icon className={`h-6 w-6 ${isActive ? "fill-primary/20" : ""}`} />
                 <span className="text-[10px] font-medium uppercase tracking-wider">{item.label}</span>
-              </a>
+              </button>
             </Link>
           );
         })}
