@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Full Body Workout",
+    "date": "2026-01-01",
+    "exercises": [
+      {
+        "name": "Push-ups",
+        "sets": [
+          { "reps": 15, "weight": 0 }
+        ]
+      }
+    ]
+  }
+]

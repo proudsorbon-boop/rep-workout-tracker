@@ -1,0 +1,13 @@
+{
+  "appId": "com.workout.rep",
+  "appName": "Rep - Workout Tracker",
+  "webDir": "dist/public",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

@@ -1,0 +1,247 @@
+2026-01-16 09:41:08.715   223-226   vold                    vold                                 E  Failed to find mounted volume for /dev/null/Android/obb/com.workout.rep/
+2026-01-16 09:41:08.903   787-857   StorageManagerService   system_server                        E  Failed to fixup app dir for com.workout.rep
+                                                                                                    android.os.ServiceSpecificException:  (code -22)
+                                                                                                    	at android.os.Parcel.createExceptionOrNull(Parcel.java:3387)
+                                                                                                    	at android.os.Parcel.createException(Parcel.java:3357)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:3340)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:3282)
+                                                                                                    	at android.os.IVold$Stub$Proxy.fixupAppDir(IVold.java:1917)
+                                                                                                    	at com.android.server.StorageManagerService$StorageManagerInternalImpl.prepareAppDataAfterInstall(StorageManagerService.java:4940)
+                                                                                                    	at com.android.server.pm.AppDataHelper.$r8$lambda$N1F5rhy9JgFGDtbMO68VR_ZDwUc(AppDataHelper.java:160)
+                                                                                                    	at com.android.server.pm.AppDataHelper$$ExternalSyntheticLambda2.run(R8$$SyntheticClass:0)
+                                                                                                    	at java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:763)
+                                                                                                    	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:486)
+                                                                                                    	at java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2155)
+                                                                                                    	at com.android.server.pm.Installer$Batch.execute(Installer.java:338)
+                                                                                                    	at com.android.server.pm.AppDataHelper.executeBatchLI(AppDataHelper.java:169)
+                                                                                                    	at com.android.server.pm.AppDataHelper.prepareAppDataPostCommitLIF(AppDataHelper.java:164)
+                                                                                                    	at com.android.server.pm.InstallPackageHelper.prepPerformDexoptIfNeeded(InstallPackageHelper.java:1209)
+                                                                                                    	at com.android.server.pm.InstallPackageHelper.installPackagesTraced(InstallPackageHelper.java:1050)
+                                                                                                    	at com.android.server.pm.PackageManagerService.installPackagesTraced(PackageManagerService.java:8247)
+                                                                                                    	at com.android.server.pm.InstallingSession.processApkInstallRequests(InstallingSession.java:567)
+                                                                                                    	at com.android.server.pm.InstallingSession.processInstallRequests(InstallingSession.java:553)
+                                                                                                    	at com.android.server.pm.InstallingSession.lambda$processPendingInstall$0(InstallingSession.java:314)
+                                                                                                    	at com.android.server.pm.InstallingSession.$r8$lambda$3YxEVU-qWs8li-YcaWhP_DprQyQ(InstallingSession.java:0)
+                                                                                                    	at com.android.server.pm.InstallingSession$$ExternalSyntheticLambda1.run(R8$$SyntheticClass:0)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:1070)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:125)
+                                                                                                    	at android.os.Looper.dispatchMessage(Looper.java:333)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:263)
+                                                                                                    	at android.os.Looper.loop(Looper.java:367)
+                                                                                                    	at android.os.HandlerThread.run(HandlerThread.java:139)
+                                                                                                    	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+2026-01-16 09:41:26.999  2688-2688  Zygote                  com.workout.rep                      I  Process 2688 created for com.workout.rep
+2026-01-16 09:41:27.000  2688-2688  com.workout.rep         com.workout.rep                      I  Late-enabling -Xcheck:jni
+2026-01-16 09:41:27.045  2688-2688  com.workout.rep         com.workout.rep                      I  Using CollectorTypeCMC GC.
+2026-01-16 09:41:27.046  2688-2688  com.workout.rep         com.workout.rep                      W  Unexpected CPU variant for x86: x86_64.
+                                                                                                    Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+2026-01-16 09:41:27.454  2688-2688  nativeloader            com.workout.rep                      D  Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+2026-01-16 09:41:29.864  2688-2688  nativeloader            com.workout.rep                      D  Configuring clns-9 for other apk /data/app/~~_pKHmTmhKRUI5fKwRwXF7Q==/com.workout.rep-BdEny-fjZN1S7DRo2JtPAg==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~_pKHmTmhKRUI5fKwRwXF7Q==/com.workout.rep-BdEny-fjZN1S7DRo2JtPAg==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.workout.rep
+2026-01-16 09:41:29.870  2688-2688  CompatChangeReporter    com.workout.rep                      D  Compat change id reported: 202956589; UID 10227; state: ENABLED
+2026-01-16 09:41:29.974  2688-2688  GraphicsEnvironment     com.workout.rep                      V  Currently set values for:
+2026-01-16 09:41:29.981  2688-2688  GraphicsEnvironment     com.workout.rep                      V    angle_gl_driver_selection_pkgs=[]
+2026-01-16 09:41:29.981  2688-2688  GraphicsEnvironment     com.workout.rep                      V    angle_gl_driver_selection_values=[]
+2026-01-16 09:41:29.982  2688-2688  GraphicsEnvironment     com.workout.rep                      V  com.workout.rep is not listed in per-application setting
+2026-01-16 09:41:29.982  2688-2688  GraphicsEnvironment     com.workout.rep                      V  ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+2026-01-16 09:41:29.983  2688-2688  GraphicsEnvironment     com.workout.rep                      V  No special selections for ANGLE, returning default driver choice
+2026-01-16 09:41:29.983  2688-2688  GraphicsEnvironment     com.workout.rep                      V  Neither updatable production driver nor prerelease driver is supported.
+2026-01-16 09:41:30.354  2688-2765  DisplayManager          com.workout.rep                      I  Choreographer implicitly registered for the refresh rate.
+2026-01-16 09:41:30.695  2688-2765  GFXSTREAM               com.workout.rep                      I  [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+2026-01-16 09:41:30.696  2688-2765  GFXSTREAM               com.workout.rep                      I  [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+2026-01-16 09:41:30.762  2688-2765  HWUI                    com.workout.rep                      W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2026-01-16 09:41:30.762  2688-2765  HWUI                    com.workout.rep                      W  Failed to initialize 101010-2 format, error = EGL_SUCCESS
+2026-01-16 09:41:30.849  2688-2688  DesktopExperienceFlags  com.workout.rep                      D  Toggle override initialized to: false
+2026-01-16 09:41:31.018   787-819   AppHibernationService   system_server                        E  Package com.workout.rep is not installed for user 0
+2026-01-16 09:41:31.018   787-819   AppHibernationService   system_server                        E  Package com.workout.rep is not installed for any user
+2026-01-16 09:41:31.042   787-819   AppHibernationService   system_server                        E  Package com.workout.rep is not installed for user 0
+2026-01-16 09:41:31.052   787-819   AppHibernationService   system_server                        E  Package com.workout.rep is not installed for any user
+2026-01-16 09:41:31.070  2688-2688  AppCompatDelegate       com.workout.rep                      D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2026-01-16 09:41:31.148  2688-2688  ashmem                  com.workout.rep                      E  Pinning is deprecated since Android Q. Please use trim or other methods.
+2026-01-16 09:41:31.354  2688-2688  CompatChangeReporter    com.workout.rep                      D  Compat change id reported: 309578419; UID 10227; state: ENABLED
+2026-01-16 09:41:31.354  2688-2688  DesktopModeFlags        com.workout.rep                      D  Toggle override initialized to: OVERRIDE_UNSET
+2026-01-16 09:41:31.458  2688-2688  com.workout.rep         com.workout.rep                      I  hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app, TargetSdkVersion=35) using reflection: allowed
+2026-01-16 09:41:31.523  2688-2688  WebViewFactory          com.workout.rep                      I  Loading com.google.android.webview version 134.0.6998.135 (code 699813538)
+2026-01-16 09:41:31.553  2688-2688  ResourcesManager        com.workout.rep                      V  The following library key has been added: ResourcesKey{ mHash=aaa0c30b mResDir=null mSplitDirs=[] mOverlayDirs=[] mLibDirs=[/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk,/data/app/~~nAMl9OfHBpAW_YRI1yNtCQ==/com.google.android.trichromelibrary_699813538-xtsj0V6eRS3j4suW9d6tPg==/TrichromeLibrary.apk,/system_ext/framework/androidx.window.extensions.jar] mDisplayId=0 mOverrideConfig=v36 mCompatInfo={420dpi always-compat} mLoaders=[]}
+2026-01-16 09:41:31.562  2688-2688  com.workout.rep         com.workout.rep                      W  Failed to find entry 'classes.dex': Entry not found
+2026-01-16 09:41:31.564  2688-2688  nativeloader            com.workout.rep                      D  Configuring clns-10 for other apk /data/app/~~nAMl9OfHBpAW_YRI1yNtCQ==/com.google.android.trichromelibrary_699813538-xtsj0V6eRS3j4suW9d6tPg==/TrichromeLibrary.apk. target_sdk_version=35, uses_libraries=ALL, library_path=/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/lib/x86_64:/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk!/lib/x86_64:/data/app/~~nAMl9OfHBpAW_YRI1yNtCQ==/com.google.android.trichromelibrary_699813538-xtsj0V6eRS3j4suW9d6tPg==/TrichromeLibrary.apk!/lib/x86_64, permitted_path=/data:/mnt/expand
+2026-01-16 09:41:31.568  2688-2688  ApplicationLoaders      com.workout.rep                      D  Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+2026-01-16 09:41:31.574  2688-2688  nativeloader            com.workout.rep                      D  Configuring clns-11 for other apk /data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/lib/x86_64:/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk!/lib/x86_64:/data/app/~~nAMl9OfHBpAW_YRI1yNtCQ==/com.google.android.trichromelibrary_699813538-xtsj0V6eRS3j4suW9d6tPg==/TrichromeLibrary.apk!/lib/x86_64, permitted_path=/data:/mnt/expand
+2026-01-16 09:41:31.742  2688-2688  cr_WVCFactoryProvider   com.workout.rep                      I  version=134.0.6998.135 (699813538) minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+2026-01-16 09:41:31.834  2688-2688  nativeloader            com.workout.rep                      D  Load /data/app/~~nAMl9OfHBpAW_YRI1yNtCQ==/com.google.android.trichromelibrary_699813538-xtsj0V6eRS3j4suW9d6tPg==/TrichromeLibrary.apk!/lib/x86_64/libmonochrome_64.so using class loader ns clns-11 (caller=/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk): ok
+2026-01-16 09:41:31.844  2688-2688  nativeloader            com.workout.rep                      D  Load /system/lib64/libwebviewchromium_plat_support.so using class loader ns clns-11 (caller=/data/app/~~QgcvG5JjUPA-BNQIOqSgoQ==/com.google.android.webview-rvlee0IKbP1pQ9pj17GIyw==/WebViewGoogle.apk): ok
+2026-01-16 09:41:31.919  2688-2791  chromium                com.workout.rep                      I  [0116/044131.890163:INFO:variations_seed_loader.cc(67)] Failed to open file for reading.: No such file or directory (2)
+2026-01-16 09:41:31.934  2688-2791  chromium                com.workout.rep                      I  [INFO:variations_seed_loader.cc(67)] Failed to open file for reading.: No such file or directory (2)
+2026-01-16 09:41:31.961  2688-2688  cr_LibraryLoader        com.workout.rep                      I  Successfully loaded native library
+2026-01-16 09:41:31.978  2688-2688  cr_CachingUmaRecorder   com.workout.rep                      I  Flushed 6 samples from 6 histograms, 0 samples were dropped.
+2026-01-16 09:41:32.007  2688-2688  cr_CombinedPProvider    com.workout.rep                      I  #registerProvider() provider:WV.I8@26c888f isPolicyCacheEnabled:false policyProvidersSize:0
+2026-01-16 09:41:32.218  2688-2688  cr_PolicyProvider       com.workout.rep                      I  #setManagerAndSource() 0
+2026-01-16 09:41:32.736  2688-2688  cr_CombinedPProvider    com.workout.rep                      I  #linkNativeInternal() 1
+2026-01-16 09:41:32.755  2688-2688  cr_AppResProvider       com.workout.rep                      I  #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+2026-01-16 09:41:32.755  2688-2688  cr_PolicyProvider       com.workout.rep                      I  #notifySettingsAvailable() 0
+2026-01-16 09:41:32.755  2688-2688  cr_CombinedPProvider    com.workout.rep                      I  #onSettingsAvailable() 0
+2026-01-16 09:41:32.755  2688-2688  cr_CombinedPProvider    com.workout.rep                      I  #flushPolicies()
+2026-01-16 09:41:33.076  2688-2833  chromium                com.workout.rep                      W  [WARNING:dns_config_service_android.cc(81)] Failed to read DnsConfig.
+2026-01-16 09:41:34.912  2688-2688  Capacitor               com.workout.rep                      D  Starting BridgeActivity
+2026-01-16 09:41:35.058  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: CapacitorCookies
+2026-01-16 09:41:35.090  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: WebView
+2026-01-16 09:41:35.096  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: CapacitorHttp
+2026-01-16 09:41:35.105  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: SystemBars
+2026-01-16 09:41:35.216  2688-2688  Capacitor               com.workout.rep                      W  Unable to read file at path public/plugins
+2026-01-16 09:41:35.248  2688-2688  Capacitor               com.workout.rep                      D  Loading app at https://localhost
+2026-01-16 09:41:35.544  2688-2839  cr_media                com.workout.rep                      W  BLUETOOTH_CONNECT permission is missing.
+2026-01-16 09:41:35.557  2688-2839  cr_media                com.workout.rep                      W  getBluetoothAdapter() requires BLUETOOTH permission
+2026-01-16 09:41:35.557  2688-2839  cr_media                com.workout.rep                      W  registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+2026-01-16 09:41:35.871  2688-2688  Capacitor               com.workout.rep                      D  App started
+2026-01-16 09:41:35.879  2688-2688  Capacitor               com.workout.rep                      D  App resumed
+2026-01-16 09:41:35.932  2688-2688  CompatChangeReporter    com.workout.rep                      D  Compat change id reported: 349153669; UID 10227; state: ENABLED
+2026-01-16 09:41:35.948  2688-2688  HWUI                    com.workout.rep                      W  Unknown dataspace 0
+2026-01-16 09:41:36.123  2688-2907  chromium                com.workout.rep                      W  [WARNING:viz_main_impl.cc(85)] VizNullHypothesis is disabled (not a warning)
+2026-01-16 09:41:36.425  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/
+2026-01-16 09:41:36.461  2688-2688  Capacitor               com.workout.rep                      D  App paused
+2026-01-16 09:41:36.480  2688-2688  Capacitor               com.workout.rep                      D  App stopped
+2026-01-16 09:41:36.481  2688-2688  Capacitor               com.workout.rep                      D  Saving instance state!
+2026-01-16 09:41:36.511  2688-2688  Capacitor               com.workout.rep                      D  App destroyed
+2026-01-16 09:41:36.523  2688-2688  ViewRootImpl            com.workout.rep                      D  Skipping stats log for color mode
+2026-01-16 09:41:36.544  2688-2937  CameraManagerGlobal     com.workout.rep                      I  Connecting to camera service
+2026-01-16 09:41:36.956  2688-2688  Capacitor               com.workout.rep                      D  Starting BridgeActivity
+2026-01-16 09:41:36.969  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: CapacitorCookies
+2026-01-16 09:41:36.976  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: WebView
+2026-01-16 09:41:36.984  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: CapacitorHttp
+2026-01-16 09:41:36.986  2688-2688  Capacitor               com.workout.rep                      D  Registering plugin instance: SystemBars
+2026-01-16 09:41:37.126  2688-2688  Capacitor               com.workout.rep                      W  Unable to read file at path public/plugins
+2026-01-16 09:41:37.146  2688-2688  Capacitor               com.workout.rep                      D  Loading app at https://localhost
+2026-01-16 09:41:37.220  2688-2688  Capacitor               com.workout.rep                      D  App started
+2026-01-16 09:41:37.221  2688-2688  Capacitor               com.workout.rep                      D  App resumed
+2026-01-16 09:41:37.236  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/
+2026-01-16 09:41:37.322  2688-2688  Choreographer           com.workout.rep                      I  Skipped 106 frames!  The application may be doing too much work on its main thread.
+2026-01-16 09:41:37.337  2688-2688  VRI[MainActivity]       com.workout.rep                      D  WindowInsets changed: 1080x2400 navigationBars:[0,0,0,63] mandatorySystemGestures:[0,0,0,84] 
+2026-01-16 09:41:37.347  2688-2688  WindowOnBackDispatcher  com.workout.rep                      D  setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@46e0174
+2026-01-16 09:41:37.416  2688-2704  com.workout.rep         com.workout.rep                      W  Suspending all threads took: 7.211ms
+2026-01-16 09:41:37.677  2688-2975  ProfileInstaller        com.workout.rep                      D  Installing profile for com.workout.rep
+2026-01-16 09:41:37.752  2688-2974  HWUI                    com.workout.rep                      I  Davey! duration=2149ms; Flags=1, FrameTimelineVsyncId=26582, IntendedVsync=370488834162, Vsync=372255500758, InputEventId=0, HandleInputStart=372268455900, AnimationStart=372268493280, PerformTraversalsStart=372272010060, DrawStart=372467148490, FrameDeadline=370505500828, FrameStartTime=372267673550, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=372486174380, SyncStart=372487689610, IssueDrawCommandsStart=372487795340, SwapBuffers=372586699110, FrameCompleted=372639990800, DequeueBufferDuration=28690, QueueBufferDuration=948860, GpuCompleted=372639990800, SwapBuffersCompleted=372600565740, DisplayPresentTime=0, CommandSubmissionCompleted=372586699110, 
+2026-01-16 09:41:37.795  2688-2832  cr_AwSupervisedUserDel  com.workout.rep                      E  Unable to determine if restricted content blocking is required. Exception: java.util.concurrent.TimeoutException
+2026-01-16 09:41:37.857  2688-2704  com.workout.rep         com.workout.rep                      W  userfaultfd: MOVE ioctl seems unsupported: Connection timed out
+2026-01-16 09:41:37.888  2688-2704  com.workout.rep         com.workout.rep                      I  Background concurrent mark compact GC freed 3773KB AllocSpace bytes, 37(1736KB) LOS objects, 49% free, 3499KB/6999KB, paused 37.494ms,9.199ms total 806.565ms
+2026-01-16 09:41:38.563  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/assets/index-BTDCqF58.js
+2026-01-16 09:41:38.575  2688-2834  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/assets/index-BZwguWFH.css
+2026-01-16 09:41:38.892  2688-2838  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/assets/index-BTDCqF58.js
+2026-01-16 09:41:38.895  2688-2835  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/assets/index-BZwguWFH.css
+2026-01-16 09:41:39.294  2688-2688  Capacitor/Console       com.workout.rep                      E  File: https://localhost/ - Line 1 - Msg: Uncaught TypeError: Cannot read properties of undefined (reading 'triggerEvent')
+2026-01-16 09:41:39.388  2688-2688  InsetsController        com.workout.rep                      D  hide(ime())
+2026-01-16 09:41:39.390  2688-2688  ImeTracker              com.workout.rep                      I  com.workout.rep:9dce0f3e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2026-01-16 09:41:42.181  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/favicon.png
+2026-01-16 09:41:42.574  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/api/workouts
+2026-01-16 09:41:43.179  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/api/workouts
+2026-01-16 09:41:43.271  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/favicon.png
+2026-01-16 09:41:44.334  2688-3029  HWUI                    com.workout.rep                      I  Davey! duration=1204ms; Flags=0, FrameTimelineVsyncId=29968, IntendedVsync=378072167192, Vsync=378072167192, InputEventId=0, HandleInputStart=378075612030, AnimationStart=378075691700, PerformTraversalsStart=378124250410, DrawStart=378124483000, FrameDeadline=378088833858, FrameStartTime=378075580310, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=378129219750, SyncStart=378129311120, IssueDrawCommandsStart=378129419870, SwapBuffers=379266207780, FrameCompleted=379276383200, DequeueBufferDuration=51730, QueueBufferDuration=1970590, GpuCompleted=379276383200, SwapBuffersCompleted=379269692850, DisplayPresentTime=0, CommandSubmissionCompleted=379266207780, 
+2026-01-16 09:41:44.362  2688-2688  Choreographer           com.workout.rep                      I  Skipped 66 frames!  The application may be doing too much work on its main thread.
+2026-01-16 09:41:44.505  2688-2974  HWUI                    com.workout.rep                      I  Davey! duration=1234ms; Flags=0, FrameTimelineVsyncId=29983, IntendedVsync=378205508087, Vsync=379305507977, InputEventId=0, HandleInputStart=379316586440, AnimationStart=379316623070, PerformTraversalsStart=379357821230, DrawStart=379357994920, FrameDeadline=379322167141, FrameStartTime=379307716320, FrameInterval=16666665, WorkloadTarget=16666666, SyncQueued=379358418190, SyncStart=379358564690, IssueDrawCommandsStart=379358605850, SwapBuffers=379433172680, FrameCompleted=379439861510, DequeueBufferDuration=35870, QueueBufferDuration=5897800, GpuCompleted=379439662530, SwapBuffersCompleted=379439861510, DisplayPresentTime=0, CommandSubmissionCompleted=379433172680, 
+2026-01-16 09:41:49.655  2688-2704  com.workout.rep         com.workout.rep                      I  Background young concurrent mark compact GC freed 2000KB AllocSpace bytes, 7(268KB) LOS objects, 50% free, 3459KB/6999KB, paused 2.143ms,4.459ms total 115.345ms
+2026-01-16 09:41:50.121  2688-2696  com.workout.rep         com.workout.rep                      I  Compiler allocated 5087KB to compile void android.view.ViewRootImpl.performTraversals()
+2026-01-16 09:41:57.822   787-3442  ActivityManager         system_server                        E  ANR in com.google.android.gms.persistent
+                                                                                                    PID: 2690
+                                                                                                    Reason: Broadcast of Intent { act=android.safetycenter.action.REFRESH_SAFETY_SOURCES flg=0x10000010 xflg=0x4 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.GmsIntentOperationService$PersistentTrustedReceiver (has extras) }
+                                                                                                    ErrorId: 57572209-4f52-4edb-8b8a-1b5b5f035639
+                                                                                                    Frozen: false
+                                                                                                    Load: 0.0 / 0.0 / 0.0
+                                                                                                    ----- Output from /proc/pressure/memory -----
+                                                                                                    some avg10=15.10 avg60=5.69 avg300=1.59 total=5913357
+                                                                                                    full avg10=4.94 avg60=1.71 avg300=0.42 total=2141860
+                                                                                                    ----- End output from /proc/pressure/memory -----
+                                                                                                    ----- Output from /proc/pressure/cpu -----
+                                                                                                    some avg10=91.76 avg60=88.36 avg300=47.10 total=201611317
+                                                                                                    full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+                                                                                                    ----- End output from /proc/pressure/cpu -----
+                                                                                                    ----- Output from /proc/pressure/io -----
+                                                                                                    some avg10=11.55 avg60=13.11 avg300=11.28 total=69654076
+                                                                                                    full avg10=0.00 avg60=0.61 avg300=5.04 total=42390465
+                                                                                                    ----- End output from /proc/pressure/io -----
+                                                                                                    
+                                                                                                    CPU usage from 11164ms to -3ms ago (2026-01-16 04:41:44.176 to 2026-01-16 04:41:55.343):
+                                                                                                      35% 787/system_server: 18% user + 16% kernel / faults: 11852 minor 861 major
+                                                                                                      27% 2688/com.workout.rep: 15% user + 12% kernel / faults: 3211 minor 45 major
+                                                                                                      15% 2019/com.google.android.inputmethod.latin: 7.2% user + 8.6% kernel / faults: 2809 minor 253 major
+                                                                                                      13% 2629/com.android.vending: 5.5% user + 7.5% kernel / faults: 6544 minor 215 major
+                                                                                                      11% 50/kswapd0: 0% user + 11% kernel
+                                                                                                      10% 1529/com.android.systemui: 0% user + 10% kernel / faults: 101 minor 157 major
+                                                                                                      10% 2690/com.google.android.gms.persistent: 5.5% user + 4.9% kernel / faults: 7177 minor 396 major
+                                                                                                      9.9% 3070/com.google.android.apps.wallpaper: 7.8% user + 2.1% kernel / faults: 8146 minor 27 major
+                                                                                                      6.5% 3114/com.google.android.apps.wellbeing: 3.5% user + 2.9% kernel / faults: 3864 minor 105 major
+                                                                                                      5.9% 2748/com.google.android.gms: 3.6% user + 2.2% kernel / faults: 3377 minor 166 major
+                                                                                                    100% TOTAL: 42% user + 55% kernel + 2.2% softirq
+                                                                                                    CPU usage from 390285ms to 390285ms ago (1970-01-01 00:00:00.000 to 1970-01-01 00:00:00.000) with 0% awake:
+                                                                                                    0% TOTAL: 0% user + 0% kernel
+2026-01-16 09:42:37.500   787-4142  ActivityManager         system_server                        E  ANR in com.android.phone
+                                                                                                    PID: 3798
+                                                                                                    Reason: Process ProcessRecord{dfe0b44 3798:com.android.phone/1001} failed to complete startup
+                                                                                                    ErrorId: b1843dee-c237-46fc-a9a1-2d58dd3b8dd2
+                                                                                                    Frozen: false
+                                                                                                    Load: 0.0 / 0.0 / 0.0
+                                                                                                    ----- Output from /proc/pressure/memory -----
+                                                                                                    some avg10=18.97 avg60=9.58 avg300=3.02 total=11108553
+                                                                                                    full avg10=4.30 avg60=2.56 avg300=0.79 total=3602651
+                                                                                                    ----- End output from /proc/pressure/memory -----
+                                                                                                    ----- Output from /proc/pressure/cpu -----
+                                                                                                    some avg10=92.06 avg60=90.65 avg300=53.02 total=237878636
+                                                                                                    full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+                                                                                                    ----- End output from /proc/pressure/cpu -----
+                                                                                                    ----- Output from /proc/pressure/io -----
+                                                                                                    some avg10=18.43 avg60=14.59 avg300=11.83 total=75982483
+                                                                                                    full avg10=0.00 avg60=0.31 avg300=4.39 total=42391721
+                                                                                                    ----- End output from /proc/pressure/io -----
+                                                                                                    
+                                                                                                    CPU usage from 25327ms to -64ms ago (2026-01-16 04:42:10.563 to 2026-01-16 04:42:35.953):
+                                                                                                      49% 787/system_server: 25% user + 24% kernel / faults: 23909 minor 1175 major
+                                                                                                      15% 3510/com.google.android.gms.persistent: 7.8% user + 7.8% kernel / faults: 14449 minor 484 major
+                                                                                                      13% 1529/com.android.systemui: 0.6% user + 12% kernel / faults: 761 minor 4296 major
+                                                                                                      8.6% 3024/com.google.android.as: 4.4% user + 4.1% kernel / faults: 12498 minor 862 major
+                                                                                                      8.4% 1843/com.google.android.apps.nexuslauncher: 5.1% user + 3.2% kernel / faults: 41706 minor 626 major
+                                                                                                      7.6% 50/kswapd0: 0% user + 7.6% kernel
+                                                                                                      6.2% 3600/com.google.android.googlequicksearchbox:googleapp: 3.5% user + 2.7% kernel / faults: 7018 minor 80 major
+                                                                                                      5% 3424/com.google.android.gms.unstable: 1.8% user + 3.2% kernel / faults: 4698 minor 106 major
+                                                                                                      3.7% 2629/com.android.vending: 1.6% user + 2.1% kernel / faults: 6356 minor 272 major
+                                                                                                      3.6% 2688/com.workout.rep: 0.8% user + 2.8% kernel / faults: 931 minor 1430 major
+                                                                                                    99% TOTAL: 39% user + 58% kernel + 2.3% softirq
+                                                                                                    CPU usage from 430835ms to 430835ms ago (1970-01-01 00:00:00.000 to 1970-01-01 00:00:00.000) with 0% awake:
+                                                                                                    0% TOTAL: 0% user + 0% kernel
+2026-01-16 09:43:18.458  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/favicon.png
+2026-01-16 09:43:18.517  2688-2833  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/favicon.png
+2026-01-16 09:43:19.034  2688-2688  Choreographer           com.workout.rep                      I  Skipped 33 frames!  The application may be doing too much work on its main thread.
+2026-01-16 09:43:19.118  2688-2977  HWUI                    com.workout.rep                      I  Davey! duration=803ms; Flags=0, FrameTimelineVsyncId=31218, IntendedVsync=473122163390, Vsync=473122163390, InputEventId=838121617, HandleInputStart=473123884920, AnimationStart=473123925700, PerformTraversalsStart=473154729080, DrawStart=473165210330, FrameDeadline=473138830056, FrameStartTime=473123858490, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=473182628870, SyncStart=473184611540, IssueDrawCommandsStart=473200966050, SwapBuffers=473918314700, FrameCompleted=473927912420, DequeueBufferDuration=512380, QueueBufferDuration=5881190, GpuCompleted=473926807620, SwapBuffersCompleted=473927912420, DisplayPresentTime=0, CommandSubmissionCompleted=473918314700, 
+2026-01-16 09:43:28.175  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/api/workouts
+2026-01-16 09:43:28.456  2688-2832  Capacitor               com.workout.rep                      D  Handling local request: https://localhost/favicon.png
+2026-01-16 09:43:39.789   787-4670  ActivityManager         system_server                        E  ANR in com.android.phone
+                                                                                                    PID: 4434
+                                                                                                    Reason: Process ProcessRecord{dfe0b44 4434:com.android.phone/1001} failed to complete startup
+                                                                                                    ErrorId: 148ad719-dddd-4150-955a-437b50dae952
+                                                                                                    Frozen: false
+                                                                                                    Load: 0.0 / 0.0 / 0.0
+                                                                                                    ----- Output from /proc/pressure/memory -----
+                                                                                                    some avg10=14.26 avg60=13.96 avg300=5.65 total=22575130
+                                                                                                    full avg10=1.79 avg60=1.98 avg300=0.95 total=4886958
+                                                                                                    ----- End output from /proc/pressure/memory -----
+                                                                                                    ----- Output from /proc/pressure/cpu -----
+                                                                                                    some avg10=91.49 avg60=92.25 avg300=60.76 total=297006360
+                                                                                                    full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+                                                                                                    ----- End output from /proc/pressure/cpu -----
+                                                                                                    ----- Output from /proc/pressure/io -----
+                                                                                                    some avg10=15.18 avg60=19.63 avg300=14.06 total=91006663
+                                                                                                    full avg10=0.00 avg60=0.12 avg300=3.54 total=42456096
+                                                                                                    ----- End output from /proc/pressure/io -----
+                                                                                                    
+                                                                                                    CPU usage from 32110ms to -112ms ago (2026-01-16 04:43:06.376 to 2026-01-16 04:43:38.598):
+                                                                                                      48% 2629/com.android.vending: 34% user + 13% kernel / faults: 7956 minor 243 major
+                                                                                                      30% 787/system_server: 13% user + 17% kernel / faults: 16164 minor 632 major
+                                                                                                      12% 2019/com.google.android.inputmethod.latin: 5.5% user + 7% kernel / faults: 3904 minor 1438 major
+                                                                                                      8.5% 1529/com.android.systemui: 0.2% user + 8.3% kernel / faults: 102 minor 86 major
+                                                                                                      8.5% 4375/com.google.android.gms: 4.3% user + 4.1% kernel / faults: 14909 minor 484 major
+                                                                                                      7.7% 4389/com.google.android.gms.persistent: 4% user + 3.6% kernel / faults: 12887 minor 246 major
+                                                                                                      5.9% 58/kworker/1:1H-kverityd: 0% user + 5.9% kernel
+                                                                                                      4.9% 75/erofs_worker/1: 0% user + 4.9% kernel
+                                                                                                      4.9% 2688/com.workout.rep: 1.4% user + 3.4% kernel / faults: 1877 minor 2735 major
+                                                                                                      3.9% 17/ksoftirqd/0: 0% user + 3.9% kernel
+                                                                                                    99% TOTAL: 39% user + 54% kernel + 0% iowait + 5.9% softirq
+                                                                                                    CPU usage from 493431ms to 493431ms ago (1970-01-01 00:00:00.000 to 1970-01-01 00:00:00.000) with 0% awake:
+                                                                                                    0% TOTAL: 0% user + 0% kernel
+2026-01-16 09:43:42.166   787-1013  InputDispatcher         system_server                        E  channel '3aaa01c com.workout.rep/com.workout.rep.MainActivity' ~ Channel is unrecoverably broken and will be disposed!
+2026-01-16 09:44:49.158  2629-3113  Finsky                  com.android.vending                  E  [62] ItemStore: getItems RPC failed for item com.workout.rep
