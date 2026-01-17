@@ -17,7 +17,7 @@ import { Dumbbell, User, Layout, BookOpen, BarChart, Bell } from "lucide-react";
 import { useState, useEffect } from "react";
 
 function Navigation() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
 
   const navItems = [
     { href: "/", icon: Layout, label: "Workouts" },
@@ -27,20 +27,29 @@ function Navigation() {
     { href: "/profile", icon: User, label: "Profile" },
   ];
 
+  const handleNav = (href: string) => {
+    if (location !== href) {
+      setLocation(href);
+    }
+  };
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-white/5 px-4 pb-8 pt-3 z-50">
       <div className="max-w-md mx-auto flex justify-between items-center">
         {navItems.map((item) => {
           const isActive = location === item.href;
           return (
-            <Link key={item.href} href={item.href}>
-              <button className={`flex flex-col items-center gap-1 transition-colors ${
+            <button 
+              key={item.href}
+              type="button"
+              onClick={() => handleNav(item.href)}
+              className={`flex flex-col items-center gap-1 transition-colors outline-none ${
                 isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
-              }`}>
-                <item.icon className={`h-6 w-6 ${isActive ? "fill-primary/20" : ""}`} />
-                <span className="text-[10px] font-medium uppercase tracking-wider">{item.label}</span>
-              </button>
-            </Link>
+              }`}
+            >
+              <item.icon className={`h-6 w-6 ${isActive ? "fill-primary/20" : ""}`} />
+              <span className="text-[10px] font-medium uppercase tracking-wider">{item.label}</span>
+            </button>
           );
         })}
       </div>

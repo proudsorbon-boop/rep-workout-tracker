@@ -1,7 +1,7 @@
 {
   "appId": "com.workout.rep",
   "appName": "Rep - Workout Tracker",
-  "webDir": "dist",
+  "webDir": "dist/public",
   "server": {
     "androidScheme": "https"
   },
