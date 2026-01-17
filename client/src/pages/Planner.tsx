@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, Flame, Dumbbell } from "lucide-react";
+import { CheckCircle2, Clock, Flame, Dumbbell, PlayCircle } from "lucide-react";
 import {
   useCreateWorkout,
   useCreateExercise,
@@ -112,23 +112,25 @@ export default function Planner() {
       </header>
 
       <Tabs value={level} onValueChange={(v) => setLevel(v as any)}>
-        <TabsList className="grid grid-cols-3 mb-6">
-          <TabsTrigger value="beginner">Beginner</TabsTrigger>
-          <TabsTrigger value="intermediate">Intermediate</TabsTrigger>
-          <TabsTrigger value="advanced">Advanced</TabsTrigger>
+        <TabsList className="grid grid-cols-3 mb-6 bg-muted/50 p-1 h-12 rounded-xl">
+          <TabsTrigger value="beginner" className="rounded-lg">Beginner</TabsTrigger>
+          <TabsTrigger value="intermediate" className="rounded-lg">Intermediate</TabsTrigger>
+          <TabsTrigger value="advanced" className="rounded-lg">Advanced</TabsTrigger>
         </TabsList>
       </Tabs>
 
-      <Card className="mb-6">
+      <Card className="mb-6 bg-card border-white/5 overflow-hidden">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>{plan.title}</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl">{plan.title}</CardTitle>
+              <CardDescription className="text-base">
                 Auto-generated workout with exercises
               </CardDescription>
             </div>
-            <Badge variant="outline">{plan.intensity}</Badge>
+            <Badge variant="outline" className="bg-primary/5 border-primary/20 text-primary">
+              {plan.intensity}
+            </Badge>
           </div>
         </CardHeader>
 
@@ -136,15 +138,15 @@ export default function Planner() {
           {plan.schedule.map((day, i) => (
             <div
               key={i}
-              className="flex justify-between items-center p-3 rounded-lg bg-muted/30"
+              className="flex justify-between items-center p-4 rounded-2xl bg-white/5 border border-white/5"
             >
               <div>
-                <p className="font-bold">{day.day}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-primary font-bold">{day.day}</p>
+                <p className="font-bold">
                   {day.focus}
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
                 {day.duration}
               </div>
@@ -155,22 +157,22 @@ export default function Planner() {
 
       <Button
         onClick={startPlan}
-        className="w-full h-12 text-lg font-bold"
+        className="w-full h-14 text-lg font-bold rounded-2xl shadow-lg shadow-primary/20"
       >
-        <CheckCircle2 className="h-5 w-5 mr-2" />
+        <PlayCircle className="h-5 w-5 mr-2" />
         Start this plan
       </Button>
 
       <div className="grid grid-cols-2 gap-4 mt-6">
-        <Card className="p-4">
-          <Flame className="h-6 w-6 text-orange-500" />
+        <Card className="p-5 bg-card border-white/5">
+          <Flame className="h-6 w-6 text-orange-500 mb-2" />
           <p className="text-2xl font-black">12</p>
-          <p className="text-xs text-muted-foreground">Day Streak</p>
+          <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">Day Streak</p>
         </Card>
-        <Card className="p-4">
-          <Dumbbell className="h-6 w-6 text-primary" />
+        <Card className="p-5 bg-card border-white/5">
+          <Dumbbell className="h-6 w-6 text-primary mb-2" />
           <p className="text-2xl font-black">42</p>
-          <p className="text-xs text-muted-foreground">Workouts</p>
+          <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">Workouts</p>
         </Card>
       </div>
     </div>

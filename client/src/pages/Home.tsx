@@ -1,4 +1,4 @@
-﻿import { Link, useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { format } from "date-fns";
 import {
   Dumbbell,
@@ -186,29 +186,31 @@ export default function Home() {
                     <Button
                       size="icon"
                       variant="ghost"
-                      className="text-muted-foreground hover:text-destructive"
+                      className="text-muted-foreground hover:text-destructive z-10"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="max-w-[90vw] rounded-2xl border-white/10 bg-card p-6">
                     <AlertDialogHeader>
-                      <AlertDialogTitle>
+                      <AlertDialogTitle className="text-center text-xl font-bold">
                         Delete workout?
                       </AlertDialogTitle>
-                      <AlertDialogDescription>
+                      <AlertDialogDescription className="text-center">
                         This will permanently remove the workout.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <div className="flex justify-end gap-3">
-                      <AlertDialogCancel>
+                    <div className="flex flex-row gap-3 pt-4">
+                      <AlertDialogCancel className="flex-1 h-12 rounded-xl border-white/10 bg-white/5 hover:bg-white/10 mt-0">
                         Cancel
                       </AlertDialogCancel>
                       <AlertDialogAction
-                        className="bg-destructive text-destructive-foreground"
-                        onClick={() =>
-                          handleDeleteWorkout(workout.id)
-                        }
+                        className="flex-1 h-12 rounded-xl bg-destructive hover:bg-destructive/90 text-white font-bold"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteWorkout(workout.id);
+                        }}
                       >
                         Delete
                       </AlertDialogAction>
