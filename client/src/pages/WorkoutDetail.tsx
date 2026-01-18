@@ -1,4 +1,4 @@
-import { useRoute, Link } from "wouter";
+import { useRoute, Link, useLocation } from "wouter";
 import {
   useWorkout,
   useCreateExercise,
@@ -41,8 +41,9 @@ import { motion } from "framer-motion";
 export default function WorkoutDetail() {
   const [, params] = useRoute("/workout/:id");
   const id = params ? Number(params.id) : 0;
+  const [, setLocation] = useLocation();
 
-  const { data: workout, isLoading, error } = useWorkout(id);
+  const { data: workout, isLoading } = useWorkout(id);
   const deleteWorkout = useDeleteWorkout();
   const [isAddExerciseOpen, setIsAddExerciseOpen] = useState(false);
 
@@ -57,7 +58,7 @@ export default function WorkoutDetail() {
     );
   }
 
-  if (error || !workout) {
+  if (!workout) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-4 text-center">
         <h2 className="text-xl font-bold">Workout not found</h2>
@@ -103,7 +104,7 @@ export default function WorkoutDetail() {
                 <Trash2 className="h-5 w-5" />
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="bg-card border-white/10">
               <AlertDialogHeader>
                 <AlertDialogTitle>
                   Delete workout?
@@ -112,12 +113,14 @@ export default function WorkoutDetail() {
                   This will permanently delete the workout and all exercises.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <div className="flex justify-end gap-3">
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <div className="flex justify-end gap-3 mt-4">
+                <AlertDialogCancel className="bg-white/5 border-white/10">Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   className="bg-destructive text-destructive-foreground"
                   onClick={() =>
-                    deleteWorkout.mutate({ id: workout.id })
+                    deleteWorkout.mutate({ id: workout.id }, {
+                      onSuccess: () => setLocation("/")
+                    })
                   }
                 >
                   Delete
@@ -211,7 +214,7 @@ function AddExerciseDialog({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md bg-card">
+      <DialogContent className="sm:max-w-md bg-card border-white/10">
         <DialogHeader>
           <DialogTitle className="font-display">
             Add Exercise
@@ -226,6 +229,7 @@ function AddExerciseDialog({
             {...form.register("name")}
             placeholder="Exercise name (Bench Press)"
             autoFocus
+            className="bg-white/5 border-white/10"
           />
           {form.formState.errors.name && (
             <p className="text-sm text-destructive">
@@ -235,7 +239,7 @@ function AddExerciseDialog({
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full"
+            className="w-full h-12 text-lg font-bold"
           >
             {isPending ? "Adding..." : "Add Exercise"}
           </Button>

@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { queryClient } from "@/lib/queryClient";
 
 /* ================= TYPES ================= */
 
@@ -27,26 +28,33 @@ export type Workout = {
 const STORAGE_KEY = "workouts_data";
 
 function loadWorkouts(): Workout[] {
+  if (typeof window === "undefined") return [];
   const raw = localStorage.getItem(STORAGE_KEY);
   return raw ? JSON.parse(raw) : [];
 }
 
 function saveWorkouts(data: Workout[]) {
+  if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Notify other components about the update
+  window.dispatchEvent(new Event("storage_update"));
 }
 
 /* ================= HOOKS ================= */
 
 export function useWorkouts() {
-  const [data, setData] = useState<Workout[]>([]);
+  const [data, setData] = useState<Workout[]>(loadWorkouts());
 
   useEffect(() => {
-    setData(loadWorkouts());
+    const handleUpdate = () => {
+      setData(loadWorkouts());
+    };
+    window.addEventListener("storage_update", handleUpdate);
+    return () => window.removeEventListener("storage_update", handleUpdate);
   }, []);
 
   return {
     data,
-    setData,
     isLoading: false,
   };
 }
@@ -55,8 +63,13 @@ export function useWorkout(id: number) {
   const [workout, setWorkout] = useState<Workout | null>(null);
 
   useEffect(() => {
-    const all = loadWorkouts();
-    setWorkout(all.find((w) => w.id === id) ?? null);
+    const handleUpdate = () => {
+      const all = loadWorkouts();
+      setWorkout(all.find((w) => w.id === id) ?? null);
+    };
+    handleUpdate();
+    window.addEventListener("storage_update", handleUpdate);
+    return () => window.removeEventListener("storage_update", handleUpdate);
   }, [id]);
 
   return {
@@ -85,6 +98,7 @@ export function useCreateWorkout() {
       const updated = [workout, ...workouts];
       saveWorkouts(updated);
 
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
       options?.onSuccess?.(workout);
     },
     isPending: false,
@@ -93,10 +107,11 @@ export function useCreateWorkout() {
 
 export function useDeleteWorkout() {
   return {
-    mutate: ({ id }: { id: number }) => {
+    mutate: ({ id }: { id: number }, options?: { onSuccess?: () => void }) => {
       const updated = loadWorkouts().filter((w) => w.id !== id);
       saveWorkouts(updated);
-      window.dispatchEvent(new Event("storage"));
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
+      options?.onSuccess?.();
     },
   };
 }
@@ -105,23 +120,26 @@ export function useCreateExercise() {
   return {
     mutate: (
       input: { workoutId: number; name: string },
-      options?: { onSuccess?: () => void }
+      options?: { onSuccess?: (e: Exercise) => void }
     ) => {
       const workouts = loadWorkouts();
+      let newExercise: Exercise | null = null;
 
       workouts.forEach((w) => {
         if (w.id === input.workoutId) {
-          w.exercises.push({
+          newExercise = {
             id: Date.now(),
             name: input.name,
             workoutId: w.id,
             sets: [],
-          });
+          };
+          w.exercises.push(newExercise);
         }
       });
 
       saveWorkouts(workouts);
-      options?.onSuccess?.();
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
+      if (newExercise) options?.onSuccess?.(newExercise);
     },
     isPending: false,
   };
@@ -139,6 +157,7 @@ export function useDeleteExercise() {
       });
 
       saveWorkouts(workouts);
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
     },
   };
 }
@@ -171,6 +190,7 @@ export function useCreateSet() {
       });
 
       saveWorkouts(workouts);
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
       options?.onSuccess?.();
     },
     isPending: false,
@@ -191,6 +211,7 @@ export function useDeleteSet() {
       });
 
       saveWorkouts(workouts);
+      queryClient.invalidateQueries({ queryKey: ["workouts"] });
     },
   };
 }
