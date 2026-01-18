@@ -11,6 +11,7 @@ import {
   Plus,
   Calendar,
   Trash2,
+  X,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ExerciseCard } from "@/components/ExerciseCard";
@@ -21,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -195,8 +197,10 @@ function AddExerciseDialog({
   });
 
   const onSubmit = (data: z.infer<typeof insertExerciseSchema>) => {
+    console.log("Submitting exercise:", data);
     mutate(data, {
       onSuccess: () => {
+        console.log("Exercise added successfully");
         form.reset({ workoutId, name: "" });
         onOpenChange(false);
       },
@@ -214,36 +218,47 @@ function AddExerciseDialog({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md bg-card border-white/10">
-        <DialogHeader>
-          <DialogTitle className="font-display">
-            Add Exercise
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-md bg-card border-white/10 p-0 overflow-hidden rounded-2xl">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <DialogTitle className="text-xl font-bold text-center flex-1">
+              Add Exercise
+            </DialogTitle>
+            <DialogClose asChild>
+              <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full">
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogClose>
+          </div>
 
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 mt-2"
-        >
-          <Input
-            {...form.register("name")}
-            placeholder="Exercise name (Bench Press)"
-            autoFocus
-            className="bg-white/5 border-white/10"
-          />
-          {form.formState.errors.name && (
-            <p className="text-sm text-destructive">
-              {form.formState.errors.name.message}
-            </p>
-          )}
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full h-12 text-lg font-bold"
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
           >
-            {isPending ? "Adding..." : "Add Exercise"}
-          </Button>
-        </form>
+            <div className="relative">
+              <Input
+                {...form.register("name")}
+                placeholder="Exercise name (Bench Press)"
+                className="bg-white/5 border-2 border-primary/20 h-14 px-4 rounded-xl focus:border-primary transition-all text-lg"
+                autoFocus
+              />
+            </div>
+            
+            {form.formState.errors.name && (
+              <p className="text-sm text-destructive px-1">
+                {form.formState.errors.name.message}
+              </p>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full h-14 text-lg font-bold rounded-xl bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+            >
+              {isPending ? "Adding..." : "Add Exercise"}
+            </Button>
+          </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
