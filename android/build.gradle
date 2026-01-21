@@ -2,16 +2,12 @@
 
 buildscript {
     
-    // ✅ ВЕРСИИ (добавляем ext блок)
     ext {
         compileSdkVersion = 34
         targetSdkVersion = 34
         minSdkVersion = 22
-        
-        // Java версия
         javaVersion = JavaVersion.VERSION_17
         
-        // Библиотеки
         androidxAppCompatVersion = '1.6.1'
         androidxCoordinatorLayoutVersion = '1.2.0'
         coreSplashScreenVersion = '1.0.1'
@@ -26,11 +22,8 @@ buildscript {
     }
     
     dependencies {
-        // Android Gradle Plugin
-        classpath "com.android.tools.build:gradle:8.2.2"
-
-        // Google services (Firebase и т.п.)
-        classpath "com.google.gms:google-services:4.4.2"
+        classpath "com.android.tools.build:gradle:8.7.3"  // ✅ Обновлено
+        classpath "com.google.gms:google-services:4.4.4"  // ✅ Обновлено
     }
 }
 
@@ -43,7 +36,6 @@ allprojects {
     }
 }
 
-// ✅ Установка Java 17 для всех подпроектов
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty("android")) {
@@ -55,7 +47,6 @@ subprojects {
             }
         }
         
-        // Для Java/Kotlin задач
         tasks.withType(JavaCompile).configureEach {
             options.release = 17
         }
@@ -63,5 +54,5 @@ subprojects {
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete layout.buildDirectory  // ✅ Исправлено
 }
