@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Trash2, Plus, Dumbbell } from "lucide-react";
+import { Trash2, Plus, Dumbbell, Activity, Zap, Target } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertSetSchema } from "@shared/schema";
@@ -27,9 +27,30 @@ type ExerciseProps = {
 };
 
 const setSchema = insertSetSchema.extend({
+  exerciseId: z.number(),
   weight: z.coerce.number().min(0),
   reps: z.coerce.number().min(1),
 });
+
+// Helper function to get exercise icon based on name
+function getExerciseIcon(name: string) {
+  const lowerName = name.toLowerCase();
+  
+  if (lowerName.includes("press") || lowerName.includes("bench") || lowerName.includes("push")) {
+    return Dumbbell;
+  }
+  if (lowerName.includes("curl") || lowerName.includes("bicep") || lowerName.includes("tricep")) {
+    return Target;
+  }
+  if (lowerName.includes("squat") || lowerName.includes("leg") || lowerName.includes("deadlift")) {
+    return Activity;
+  }
+  if (lowerName.includes("pull") || lowerName.includes("row") || lowerName.includes("lat")) {
+    return Zap;
+  }
+  
+  return Dumbbell; // Default icon
+}
 
 export function ExerciseCard({ exercise }: ExerciseProps) {
   const deleteExercise = useDeleteExercise();
@@ -41,7 +62,7 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
     defaultValues: {
       exerciseId: exercise.id,
       weight: 0,
-      reps: 0,
+      reps: 1,
     },
   });
 
@@ -52,31 +73,26 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
         onSuccess: () =>
           form.reset({
             exerciseId: exercise.id,
-            weight: data.weight,
-            reps: data.reps,
+            weight: 0,
+            reps: 1,
           }),
       }
     );
   };
 
-  return (
-    <Card className="bg-card/50 backdrop-blur-sm border-white/5 overflow-hidden">
-      {/* HEADER */}
-      <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Dumbbell className="h-4 w-4" />
-          </div>
-          <h3 className="font-display font-bold text-lg">
-            {exercise.name}
-          </h3>
-        </div>
+  const ExerciseIcon = getExerciseIcon(exercise.name);
 
-        {/* DELETE EXERCISE — ALWAYS ENABLED */}
+  return (
+    <Card className="overflow-hidden">
+      {/* HEADER */}
+      <div className="p-4 flex justify-between items-center border-b">
+        <div className="flex items-center gap-2">
+          <ExerciseIcon className="h-5 w-5 text-primary" />
+          <h3 className="font-bold">{exercise.name}</h3>
+        </div>
         <Button
-          variant="ghost"
           size="icon"
-          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+          variant="ghost"
           onClick={() =>
             deleteExercise.mutate({
               id: exercise.id,
@@ -84,98 +100,74 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
             })
           }
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 />
         </Button>
       </div>
 
-      {/* CONTENT */}
-      <div className="p-4 space-y-4">
-        {/* SETS */}
-        <div className="space-y-2">
-          <div className="grid grid-cols-6 gap-2 text-xs uppercase tracking-wider text-muted-foreground font-medium px-2 mb-2">
-            <div>Set</div>
-            <div className="col-span-2 text-center">kg/lbs</div>
-            <div className="col-span-2 text-center">Reps</div>
-            <div></div>
-          </div>
-
-          <AnimatePresence initial={false}>
-            {exercise.sets.map((set, index) => (
-              <motion.div
-                key={set.id}
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="grid grid-cols-6 gap-2 items-center bg-background/50 rounded-lg p-2 border border-white/5"
+      {/* SETS */}
+      <div className="p-4 space-y-2">
+        <AnimatePresence>
+          {exercise.sets.map((set, i) => (
+            <motion.div
+              key={set.id}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="flex justify-between items-center"
+            >
+              <div>
+                #{i + 1} — {set.weight} × {set.reps}
+              </div>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() =>
+                  deleteSet.mutate({
+                    id: set.id,
+                    workoutId: exercise.workoutId,
+                  })
+                }
               >
-                <div className="text-sm font-bold text-muted-foreground pl-2">
-                  {index + 1}
-                </div>
-                <div className="col-span-2 text-center font-mono text-sm">
-                  {set.weight}
-                </div>
-                <div className="col-span-2 text-center font-mono text-sm text-primary">
-                  {set.reps}
-                </div>
-                <div className="flex justify-end">
-                  {/* DELETE SET — ALWAYS ENABLED */}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 text-muted-foreground/50 hover:text-destructive"
-                    onClick={() =>
-                      deleteSet.mutate({
-                        id: set.id,
-                        workoutId: exercise.workoutId,
-                      })
-                    }
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-
-          {exercise.sets.length === 0 && (
-            <div className="text-center py-6 text-muted-foreground text-sm italic">
-              No sets recorded yet
-            </div>
-          )}
-        </div>
+                <Trash2 />
+              </Button>
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         {/* ADD SET */}
         <form
           onSubmit={form.handleSubmit(onAddSet)}
-          className="grid grid-cols-6 gap-2 items-end pt-2 border-t border-white/5"
+          className="space-y-3 pt-2"
         >
-          <div className="pb-2 pl-2 text-xs font-medium text-primary uppercase">
-            New
-          </div>
-          <div className="col-span-2">
-            <Input
-              type="number"
-              placeholder="0"
-              className="h-8 text-center font-mono bg-background/50"
-              {...form.register("weight")}
-            />
-          </div>
-          <div className="col-span-2">
-            <Input
-              type="number"
-              placeholder="0"
-              className="h-8 text-center font-mono bg-background/50"
-              {...form.register("reps")}
-            />
-          </div>
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              size="icon"
+          <div className="flex gap-2 items-end">
+            <div className="flex-1 space-y-1.5">
+              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                Weight (kg)
+              </label>
+              <Input
+                type="number"
+                {...form.register("weight")}
+                placeholder="0"
+                className="h-12 text-lg font-bold"
+              />
+            </div>
+            <div className="flex-1 space-y-1.5">
+              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                Reps
+              </label>
+              <Input
+                type="number"
+                {...form.register("reps")}
+                placeholder="1"
+                className="h-12 text-lg font-bold"
+              />
+            </div>
+            <Button 
+              type="submit" 
               disabled={createSet.isPending}
-              className="h-8 w-8 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
+              className="h-12 w-12 shrink-0"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-5 w-5" />
             </Button>
           </div>
         </form>

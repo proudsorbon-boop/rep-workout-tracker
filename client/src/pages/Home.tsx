@@ -52,6 +52,8 @@ export default function Home() {
   const deleteWorkout = useDeleteWorkout();
   const [, setLocation] = useLocation();
   const [quote, setQuote] = useState("");
+  
+  const lastWorkout = workouts.length > 0 ? workouts[0] : null;
 
   useEffect(() => {
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
@@ -134,6 +136,36 @@ export default function Home() {
             "{quote}"
           </p>
         </motion.div>
+
+        {/* QUICK ACCESS TO LAST WORKOUT */}
+        {lastWorkout && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
+          >
+            <Link href={`/workout/${lastWorkout.id}`}>
+              <a className="block p-5 rounded-2xl bg-card border border-primary/20 hover:border-primary/40 transition group">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-1">
+                      Continue Last Workout
+                    </p>
+                    <p className="text-lg font-bold group-hover:text-primary transition">
+                      {lastWorkout.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {lastWorkout.exercises.length} exercises • {lastWorkout.exercises.reduce((acc, ex) => acc + ex.sets.length, 0)} sets
+                    </p>
+                  </div>
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition">
+                    <Dumbbell className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+              </a>
+            </Link>
+          </motion.div>
+        )}
 
         {/* STATES */}
         {isLoading && (

@@ -29,15 +29,24 @@ const STORAGE_KEY = "workouts_data";
 
 function loadWorkouts(): Workout[] {
   if (typeof window === "undefined") return [];
-  const raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.error("Failed to load workouts:", e);
+    return [];
+  }
 }
 
 function saveWorkouts(data: Workout[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  // Notify other components about the update
-  window.dispatchEvent(new Event("storage_update"));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Notify other components about the update
+    window.dispatchEvent(new Event("storage_update"));
+  } catch (e) {
+    console.error("Failed to save workouts:", e);
+  }
 }
 
 /* ================= HOOKS ================= */
@@ -50,7 +59,11 @@ export function useWorkouts() {
       setData(loadWorkouts());
     };
     window.addEventListener("storage_update", handleUpdate);
-    return () => window.removeEventListener("storage_update", handleUpdate);
+    window.addEventListener("storage", handleUpdate); // Also listen to native storage event
+    return () => {
+      window.removeEventListener("storage_update", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   return {
@@ -69,7 +82,11 @@ export function useWorkout(id: number) {
     };
     handleUpdate();
     window.addEventListener("storage_update", handleUpdate);
-    return () => window.removeEventListener("storage_update", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("storage_update", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, [id]);
 
   return {
@@ -98,6 +115,7 @@ export function useCreateWorkout() {
       const updated = [workout, ...workouts];
       saveWorkouts(updated);
 
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] }); // Invalidate both formats
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       options?.onSuccess?.(workout);
     },
@@ -110,6 +128,7 @@ export function useDeleteWorkout() {
     mutate: ({ id }: { id: number }, options?: { onSuccess?: () => void }) => {
       const updated = loadWorkouts().filter((w) => w.id !== id);
       saveWorkouts(updated);
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       options?.onSuccess?.();
     },
@@ -125,7 +144,7 @@ export function useCreateExercise() {
       const workouts = loadWorkouts();
       let newExercise: Exercise | null = null;
 
-      workouts.forEach((w) => {
+      const updated = workouts.map((w) => {
         if (w.id === input.workoutId) {
           newExercise = {
             id: Date.now(),
@@ -133,11 +152,16 @@ export function useCreateExercise() {
             workoutId: w.id,
             sets: [],
           };
-          w.exercises.push(newExercise);
+          return {
+            ...w,
+            exercises: [...w.exercises, newExercise],
+          };
         }
+        return w;
       });
 
-      saveWorkouts(workouts);
+      saveWorkouts(updated);
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       if (newExercise) options?.onSuccess?.(newExercise);
     },
@@ -150,13 +174,18 @@ export function useDeleteExercise() {
     mutate: ({ id, workoutId }: { id: number; workoutId: number }) => {
       const workouts = loadWorkouts();
 
-      workouts.forEach((w) => {
+      const updated = workouts.map((w) => {
         if (w.id === workoutId) {
-          w.exercises = w.exercises.filter((e) => e.id !== id);
+          return {
+            ...w,
+            exercises: w.exercises.filter((e) => e.id !== id),
+          };
         }
+        return w;
       });
 
-      saveWorkouts(workouts);
+      saveWorkouts(updated);
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
     },
   };
@@ -175,21 +204,31 @@ export function useCreateSet() {
     ) => {
       const workouts = loadWorkouts();
 
-      workouts.forEach((w) => {
+      const updated = workouts.map((w) => {
         if (w.id === input.workoutId) {
-          w.exercises.forEach((e) => {
+          const updatedExercises = w.exercises.map((e) => {
             if (e.id === input.exerciseId) {
-              e.sets.push({
-                id: Date.now(),
-                reps: input.reps,
-                weight: input.weight,
-              });
+              return {
+                ...e,
+                sets: [
+                  ...e.sets,
+                  {
+                    id: Date.now(),
+                    reps: input.reps,
+                    weight: input.weight,
+                  },
+                ],
+              };
             }
+            return e;
           });
+          return { ...w, exercises: updatedExercises };
         }
+        return w;
       });
 
-      saveWorkouts(workouts);
+      saveWorkouts(updated);
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       options?.onSuccess?.();
     },
@@ -202,15 +241,19 @@ export function useDeleteSet() {
     mutate: ({ id, workoutId }: { id: number; workoutId: number }) => {
       const workouts = loadWorkouts();
 
-      workouts.forEach((w) => {
+      const updated = workouts.map((w) => {
         if (w.id === workoutId) {
-          w.exercises.forEach((e) => {
-            e.sets = e.sets.filter((s) => s.id !== id);
-          });
+          const updatedExercises = w.exercises.map((e) => ({
+            ...e,
+            sets: e.sets.filter((s) => s.id !== id),
+          }));
+          return { ...w, exercises: updatedExercises };
         }
+        return w;
       });
 
-      saveWorkouts(workouts);
+      saveWorkouts(updated);
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
     },
   };

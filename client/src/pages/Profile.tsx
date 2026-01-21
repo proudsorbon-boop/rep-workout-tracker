@@ -77,7 +77,18 @@ export default function Profile() {
     return Math.round(bmr * activity);
   };
 
+  // 🥗 Macro calculation
+  const calculateMacros = (calories: number) => {
+    // Standard macro split: 30% protein, 40% carbs, 30% fats
+    const proteinGrams = Math.round((calories * 0.30) / 4); // 4 cal per gram
+    const carbsGrams = Math.round((calories * 0.40) / 4); // 4 cal per gram
+    const fatsGrams = Math.round((calories * 0.30) / 9); // 9 cal per gram
+    
+    return { proteinGrams, carbsGrams, fatsGrams };
+  };
+
   const dailyCalories = calculateCalories();
+  const macros = dailyCalories ? calculateMacros(dailyCalories) : null;
 
   return (
     <div className="min-h-screen bg-background pb-24 p-4 max-w-md mx-auto">
@@ -209,13 +220,35 @@ export default function Profile() {
             </div>
 
             {dailyCalories && (
-              <div className="mt-6 p-4 rounded-xl bg-primary/10 border border-primary/20 text-center">
-                <p className="text-sm text-muted-foreground uppercase tracking-wider font-bold">
-                  Recommended Daily Intake
-                </p>
-                <h3 className="text-3xl font-display font-black text-primary mt-1">
-                  {dailyCalories} kcal
-                </h3>
+              <div className="mt-6 space-y-4">
+                <div className="p-6 rounded-xl bg-primary/10 border border-primary/20 text-center">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-2">
+                    Recommended Daily Intake
+                  </p>
+                  <h3 className="text-4xl font-display font-black text-primary mb-3">
+                    {dailyCalories} kcal
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Based on: {profile.age} years, {profile.weight}kg, {profile.height}cm, {profile.activityLevel === "1.2" ? "Sedentary" : profile.activityLevel === "1.375" ? "Lightly Active" : profile.activityLevel === "1.55" ? "Moderately Active" : "Very Active"}
+                  </p>
+                </div>
+                
+                {macros && (
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-center">
+                      <p className="text-xs text-blue-400 uppercase tracking-wider font-bold mb-1">Protein</p>
+                      <p className="text-xl font-black text-blue-400">{macros.proteinGrams}g</p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+                      <p className="text-xs text-green-400 uppercase tracking-wider font-bold mb-1">Carbs</p>
+                      <p className="text-xl font-black text-green-400">{macros.carbsGrams}g</p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-center">
+                      <p className="text-xs text-yellow-400 uppercase tracking-wider font-bold mb-1">Fats</p>
+                      <p className="text-xl font-black text-yellow-400">{macros.fatsGrams}g</p>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </CardContent>

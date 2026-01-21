@@ -1,5 +1,13 @@
 import { useState } from "react";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
   Card,
   CardContent,
   CardHeader,
@@ -15,6 +23,7 @@ import {
   useCreateExercise,
 } from "@/hooks/use-workouts";
 import { useLocation } from "wouter";
+import { DailyIntakeCard } from "@/components/DailyIntakeCard";
 
 /**
  * 🧠 Планы + упражнения
@@ -68,6 +77,7 @@ const plans = {
 export default function Planner() {
   const [level, setLevel] =
     useState<"beginner" | "intermediate" | "advanced">("beginner");
+  const [showPreview, setShowPreview] = useState(false);
 
   const plan = plans[level];
   const createWorkout = useCreateWorkout();
@@ -78,6 +88,7 @@ export default function Planner() {
    * 🚀 СОЗДАНИЕ ВОРКАУТА + УПРАЖНЕНИЙ
    */
   const startPlan = () => {
+    setShowPreview(false);
     createWorkout.mutate(
       {
         name: plan.title,
@@ -156,12 +167,85 @@ export default function Planner() {
       </Card>
 
       <Button
-        onClick={startPlan}
+        onClick={() => setShowPreview(true)}
         className="w-full h-14 text-lg font-bold rounded-2xl shadow-lg shadow-primary/20"
       >
         <PlayCircle className="h-5 w-5 mr-2" />
         Start this plan
       </Button>
+
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="bg-card border-white/10 max-w-[90vw] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {plan.title} Preview
+            </DialogTitle>
+            <DialogDescription>
+              Review your workout plan before starting
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <p className="text-sm font-bold text-muted-foreground mb-2">Exercises ({plan.exercises.length})</p>
+              <div className="flex flex-wrap gap-2">
+                {plan.exercises.map((ex, i) => (
+                  <Badge key={i} variant="outline" className="bg-primary/5 border-primary/20">
+                    {ex}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-sm font-bold text-muted-foreground mb-2">Weekly Schedule</p>
+              <div className="space-y-2">
+                {plan.schedule.map((day, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5"
+                  >
+                    <div>
+                      <p className="text-primary font-bold">{day.day}</p>
+                      <p className="font-bold">{day.focus}</p>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      {day.duration}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
+              <p className="text-sm text-muted-foreground mb-1">Total Weekly Volume</p>
+              <p className="text-2xl font-black text-primary">
+                {plan.schedule.length} workouts
+              </p>
+            </div>
+          </div>
+          
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowPreview(false)}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={startPlan}
+              className="flex-1 bg-primary"
+            >
+              <PlayCircle className="h-4 w-4 mr-2" />
+              Start Now
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <DailyIntakeCard />
 
       <div className="grid grid-cols-2 gap-4 mt-6">
         <Card className="p-5 bg-card border-white/5">
