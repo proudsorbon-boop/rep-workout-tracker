@@ -1,4 +1,4 @@
-import { LocalNotifications } from "@capacitor/local-notifications";
+import { LocalNotifications, ScheduleOptions } from "@capacitor/local-notifications";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -18,16 +18,6 @@ const DAYS = [
   { label: "Sun", value: 1 },
 ];
 
-const NOTIFICATION_IDS = {
-  1: 101,
-  2: 102,
-  3: 103,
-  4: 104,
-  5: 105,
-  6: 106,
-  7: 107,
-};
-
 export default function Notifications() {
   const { toast } = useToast();
 
@@ -36,22 +26,26 @@ export default function Notifications() {
   const [days, setDays] = useState<number[]>([]);
 
   useEffect(() => {
-    const t = localStorage.getItem("reminder_time");
-    const e = localStorage.getItem("reminder_enabled");
-    const d = localStorage.getItem("reminder_days");
+    const loadSettings = () => {
+      const t = localStorage.getItem("reminder_time");
+      const e = localStorage.getItem("reminder_enabled");
+      const d = localStorage.getItem("reminder_days");
 
-    if (t) setReminderTime(t);
-    if (e !== null) setEnabled(e === "true");
-    if (d) setDays(JSON.parse(d));
+      if (t) setReminderTime(t);
+      if (e !== null) setEnabled(e === "true");
+      if (d) setDays(JSON.parse(d));
+    };
 
+    loadSettings();
     requestPermissions();
   }, []);
 
   const requestPermissions = async () => {
     try {
-      await LocalNotifications.requestPermissions();
+      const result = await LocalNotifications.requestPermissions();
+      console.log("✅ Notification permissions:", result);
     } catch (e) {
-      console.error("Permission error:", e);
+      console.error("❌ Permission error:", e);
     }
   };
 
@@ -67,11 +61,10 @@ export default function Notifications() {
     localStorage.setItem("reminder_days", JSON.stringify(days));
 
     try {
+      // ✅ Отменяем старые уведомления
       const pending = await LocalNotifications.getPending();
-      
       if (pending.notifications.length > 0) {
-        const idsToCancel = pending.notifications.map(n => ({ id: n.id }));
-        await LocalNotifications.cancel({ notifications: idsToCancel });
+        await LocalNotifications.cancel(pending);
         console.log("✅ Cancelled old notifications");
       }
     } catch (e) {
@@ -87,38 +80,46 @@ export default function Notifications() {
     }
 
     const [hour, minute] = reminderTime.split(":").map(Number);
+    const now = new Date();
 
-    const notifications = days.map((day) => ({
-      id: NOTIFICATION_IDS[day as keyof typeof NOTIFICATION_IDS],
-      title: "💪 Workout Time!",
-      body: "Time to train! Let's get stronger today.",
-      schedule: {
-        on: { weekday: day, hour, minute },
-        repeats: true,
-        allowWhileIdle: true,
-      },
-      channelId: "workout_channel",
-      sound: undefined,
-      smallIcon: "ic_stat_icon_config_sample",
-      actionTypeId: "",
-      extra: null,
-    }));
+    const notifications: ScheduleOptions = {
+      notifications: days.map((day, index) => {
+        // ✅ Вычисляем следующую дату для этого дня недели
+        const nextDate = new Date();
+        const currentDay = nextDate.getDay() || 7; // Воскресенье = 7
+        const daysUntil = (day - currentDay + 7) % 7 || 7;
+        nextDate.setDate(nextDate.getDate() + daysUntil);
+        nextDate.setHours(hour, minute, 0, 0);
+
+        return {
+          id: 100 + index, // ✅ Уникальный ID для каждого дня
+          title: "💪 Workout Time!",
+          body: "Time to train! Let's get stronger today.",
+          schedule: {
+            at: nextDate,
+            repeats: true,
+            every: "week",
+            allowWhileIdle: true,
+          },
+        };
+      }),
+    };
 
     try {
       console.log("📅 Scheduling notifications:", notifications);
-      await LocalNotifications.schedule({ notifications });
-      
-      console.log("✅ Notifications scheduled successfully!");
-      
+      await LocalNotifications.schedule(notifications);
+
       toast({
         title: "✅ Reminders Saved!",
         description: `${days.length} reminder(s) set for ${reminderTime}`,
       });
+
+      console.log("✅ Notifications scheduled successfully!");
     } catch (e) {
       console.error("❌ Schedule error:", e);
       toast({
         title: "❌ Error",
-        description: "Could not save reminders",
+        description: "Could not save reminders. Check permissions.",
         variant: "destructive",
       });
     }
@@ -190,8 +191,8 @@ export default function Notifications() {
         </CardContent>
       </Card>
 
-      <Button 
-        onClick={handleSave} 
+      <Button
+        onClick={handleSave}
         disabled={!enabled || days.length === 0}
         className="w-full mt-6 h-14 text-lg font-bold rounded-2xl shadow-lg shadow-primary/20 disabled:opacity-50"
       >

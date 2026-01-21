@@ -1,10 +1,30 @@
 // Top-level build file
 
 buildscript {
+    
+    // ✅ ВЕРСИИ (добавляем ext блок)
+    ext {
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        minSdkVersion = 22
+        
+        // Java версия
+        javaVersion = JavaVersion.VERSION_17
+        
+        // Библиотеки
+        androidxAppCompatVersion = '1.6.1'
+        androidxCoordinatorLayoutVersion = '1.2.0'
+        coreSplashScreenVersion = '1.0.1'
+        androidxJunitVersion = '1.1.5'
+        androidxEspressoCoreVersion = '3.5.1'
+        junitVersion = '4.13.2'
+    }
+    
     repositories {
         google()
         mavenCentral()
     }
+    
     dependencies {
         // Android Gradle Plugin
         classpath "com.android.tools.build:gradle:8.2.2"
@@ -20,6 +40,25 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+// ✅ Установка Java 17 для всех подпроектов
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
+                }
+            }
+        }
+        
+        // Для Java/Kotlin задач
+        tasks.withType(JavaCompile).configureEach {
+            options.release = 17
+        }
     }
 }
 
