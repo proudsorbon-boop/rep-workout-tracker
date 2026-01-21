@@ -82,14 +82,29 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
 
   const ExerciseIcon = getExerciseIcon(exercise.name);
 
+  // Считаем общий объем (Вес * Повторения)
+  const totalVolume = exercise.sets.reduce((acc, set) => {
+    return acc + (set.weight * set.reps);
+  }, 0);
+
   return (
     <Card className="overflow-hidden">
       {/* HEADER */}
       <div className="p-4 flex justify-between items-center border-b">
         <div className="flex items-center gap-2">
           <ExerciseIcon className="h-5 w-5 text-primary" />
-          <h3 className="font-bold">{exercise.name}</h3>
+          
+          <div className="flex flex-col">
+            <h3 className="font-bold leading-tight">
+              {exercise.name}
+            </h3>
+            <span className="text-xs text-muted-foreground">
+              {totalVolume > 0 ? `Объем: ${totalVolume} кг` : "Объем: 0 кг"}
+            </span>
+          </div>
         </div>
+        
+        {/* DELETE EXERCISE — ALWAYS ENABLED */}
         <Button
           size="icon"
           variant="ghost"
@@ -100,7 +115,7 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
             })
           }
         >
-          <Trash2 />
+          <Trash2 className="h-4 w-4" />
         </Button>
       </div>
 
@@ -128,50 +143,56 @@ export function ExerciseCard({ exercise }: ExerciseProps) {
                   })
                 }
               >
-                <Trash2 />
+                <Trash2 className="h-3 w-3" />
               </Button>
             </motion.div>
           ))}
         </AnimatePresence>
 
-        {/* ADD SET */}
-        <form
-          onSubmit={form.handleSubmit(onAddSet)}
-          className="space-y-3 pt-2"
-        >
-          <div className="flex gap-2 items-end">
-            <div className="flex-1 space-y-1.5">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                Weight (kg)
-              </label>
-              <Input
-                type="number"
-                {...form.register("weight")}
-                placeholder="0"
-                className="h-12 text-lg font-bold"
-              />
-            </div>
-            <div className="flex-1 space-y-1.5">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                Reps
-              </label>
-              <Input
-                type="number"
-                {...form.register("reps")}
-                placeholder="1"
-                className="h-12 text-lg font-bold"
-              />
-            </div>
-            <Button 
-              type="submit" 
-              disabled={createSet.isPending}
-              className="h-12 w-12 shrink-0"
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
+        {exercise.sets.length === 0 && (
+          <div className="text-center py-6 text-muted-foreground text-sm italic">
+            No sets recorded yet
           </div>
-        </form>
+        )}
       </div>
+
+      {/* ADD SET */}
+      <form
+        onSubmit={form.handleSubmit(onAddSet)}
+        className="space-y-3 pt-2 border-t"
+      >
+        <div className="flex gap-2 items-end">
+          <div className="flex-1 space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              Weight (kg)
+            </label>
+            <Input
+              type="number"
+              {...form.register("weight")}
+              placeholder="0"
+              className="h-12 text-lg font-bold"
+            />
+          </div>
+          <div className="flex-1 space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              Reps
+            </label>
+            <Input
+              type="number"
+              {...form.register("reps")}
+              placeholder="1"
+              className="h-12 text-lg font-bold"
+            />
+          </div>
+          <Button 
+            type="submit" 
+            disabled={createSet.isPending}
+            className="h-12 w-12 shrink-0"
+          >
+            <Plus className="h-5 w-5" />
+          </Button>
+        </div>
+      </form>
     </Card>
   );
 }
